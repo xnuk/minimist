@@ -56,8 +56,7 @@ module.exports = function (args, opts) {
             if (flags.unknownFn(arg) === false) return;
         }
 
-        var value = !flags.strings[key] && isNumber(val)
-            ? Number(val) : val
+        var value = val
         ;
         setKey(argv, key.split('.'), value);
         
@@ -183,7 +182,7 @@ module.exports = function (args, opts) {
         else {
             if (!flags.unknownFn || flags.unknownFn(arg) !== false) {
                 argv._.push(
-                    flags.strings['_'] || !isNumber(arg) ? arg : Number(arg)
+                    flags.strings['_'] || arg
                 );
             }
             if (opts.stopEarly) {
@@ -226,11 +225,5 @@ function hasKey (obj, keys) {
 
     var key = keys[keys.length - 1];
     return key in o;
-}
-
-function isNumber (x) {
-    if (typeof x === 'number') return true;
-    if (/^0x[0-9a-f]+$/i.test(x)) return true;
-    return /^[-+]?(?:\d+(?:\.\d*)?|\.\d+)(e[-+]?\d+)?$/.test(x);
 }
 
